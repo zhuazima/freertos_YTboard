@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "freertos.h": "c",
-        "task.h": "c"
+        "task.h": "c",
+        "stm32f10x.h": "c",
+        "hal_led.h": "c"
     }
 }

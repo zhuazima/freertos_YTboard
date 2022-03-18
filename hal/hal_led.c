@@ -35,3 +35,16 @@ void hal_Led1Drive(unsigned char sta)
 		GPIO_ResetBits(LED1_PORT,LED1_PIN);
 	}
 }
+
+
+void hal_Led2Drive(unsigned char sta)
+{
+	if(sta)
+	{
+		GPIO_SetBits(LED2_PORT,LED2_PIN);
+	}else
+	{
+		GPIO_ResetBits(LED2_PORT,LED2_PIN);
+	}
+}
+

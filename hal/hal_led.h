@@ -10,6 +10,7 @@
 
 
 void hal_Led1Drive(unsigned char sta);
+void hal_Led2Drive(unsigned char sta);
 void hal_ledConfig(void);
 
 #endif
