@@ -27,15 +27,6 @@
 ".\objects\stm32f10x_it.o"
 ".\objects\main.o"
 ".\objects\hal_led.o"
-".\objects\croutine.o"
-".\objects\event_groups.o"
-".\objects\list.o"
-".\objects\queue.o"
-".\objects\stream_buffer.o"
-".\objects\tasks.o"
-".\objects\timers.o"
-".\objects\port.o"
-".\objects\heap_4.o"
 --strict --scatter ".\Objects\wh01.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
