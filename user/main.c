@@ -70,9 +70,9 @@ static void vTaskMsgPro(void *pvParameters)
     while(1)
     {
         hal_Led1Drive(1);
-        vTaskDelay(200);
+        vTaskDelay(1000);
         hal_Led1Drive(0);
-        vTaskDelay(200);
+        vTaskDelay(1000);
     } 
  }
 /*
