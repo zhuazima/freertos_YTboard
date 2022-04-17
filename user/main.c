@@ -6,6 +6,7 @@
 
 /* hal */
 #include "hal_led.h"
+#include "hal_relay.h"
 
 /*
 **********************************************************************************************************
@@ -15,6 +16,7 @@
 
 static void vTaskMsgPro(void *pvParameters);
 static void vTaskStart(void *pvParameters);
+static void vTaskRelay(void *pvParameters);
 static void AppTaskCreate (void);
 /*
 **********************************************************************************************************
@@ -23,6 +25,7 @@ static void AppTaskCreate (void);
 */
 static TaskHandle_t xHandleTaskMsgPro = NULL;
 static TaskHandle_t xHandleTaskStart = NULL;
+static TaskHandle_t xHandleTaskRelay = NULL;
 /*
 *********************************************************************************************************
 * 函 数 名: main
@@ -44,7 +47,10 @@ int main(void)
     // __set_PRIMASK(1); 
     // __disable_irq();
     /* 硬件初始化 */
-    hal_ledConfig(); 
+    hal_ledConfig();
+    RELAY_Init();
+
+
     /* 创建任务 */
     AppTaskCreate();
     /* 启动调度，开始执行任务 */
@@ -94,6 +100,27 @@ static void vTaskStart(void *pvParameters)
         vTaskDelay(500);
     } 
  }
+
+/*
+*********************************************************************************************************
+* 函 数 名: vTaskStart
+* 功能说明: 启动任务，也就是最高优先级任务，这里用作 LED 闪烁
+* 形 参: pvParameters 是在创建该任务时传递的形参
+* 返 回 值: 无
+* 优 先 级: 4 
+*********************************************************************************************************
+*/
+
+static void vTaskRelay(void *pvParameters)
+{
+    while(1)
+    {
+        RELAY_1(1);
+        vTaskDelay(2000);
+        RELAY_1(0);
+        vTaskDelay(2000);
+    } 
+ }
 /*
 *********************************************************************************************************
 * 函 数 名: AppTaskCreate
@@ -115,6 +142,12 @@ static void AppTaskCreate (void)
                 NULL, /* 任务参数 */
                 4, /* 任务优先级*/
                 &xHandleTaskStart ); /* 任务句柄 */
+    xTaskCreate( vTaskRelay, /* 任务函数 */
+                "vTaskRelay", /* 任务名 */
+                512, /* 任务栈大小，单位 word，也就是 4 字节 */
+                NULL, /* 任务参数 */
+                5, /* 任务优先级*/
+                &xHandleTaskRelay ); /* 任务句柄 */
 }
 /***************************** 安富莱电子 www.armfly.com (END OF FILE) *********************************/
 
@@ -125,28 +158,3 @@ static void AppTaskCreate (void)
 
 
 
-
-
-
-
-
-
-// void delay(unsigned long DelayTime);
-
-// int main(void)
-// {
-// 	hal_ledConfig();
-// 	while(1)
-// 	{
-// 		hal_Led1Drive(0);
-//         delay(7200000);
-//         hal_Led1Drive(1);
-//         delay(7200000);
-// 	}
-// }
-
-// void delay(unsigned long DelayTime)
-// {
-//     unsigned long i;
-//     for(i = 0;i < DelayTime;i++);
-// }

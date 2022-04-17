@@ -27,6 +27,7 @@
 ".\objects\stm32f10x_it.o"
 ".\objects\main.o"
 ".\objects\hal_led.o"
+".\objects\hal_relay.o"
 ".\objects\croutine.o"
 ".\objects\event_groups.o"
 ".\objects\list.o"

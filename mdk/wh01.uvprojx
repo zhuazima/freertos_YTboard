@@ -538,6 +538,11 @@
               <FileType>1</FileType>
               <FilePath>..\hal\hal_led.c</FilePath>
             </File>
+            <File>
+              <FileName>hal_relay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hal\hal_relay.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
