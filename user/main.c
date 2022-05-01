@@ -8,6 +8,10 @@
 #include "hal_led.h"
 #include "hal_relay.h"
 
+
+
+volatile uint32_t ulHighFrequencyTimerTicks = 0UL;
+
 /*
 **********************************************************************************************************
 函数声明

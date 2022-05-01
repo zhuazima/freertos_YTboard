@@ -41,17 +41,17 @@
  *----------------------------------------------------------*/
 
 
-// /* Ensure stdint is only used by the compiler, and not the assembler. */
-// #if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
-// #include <stdint.h>
-// extern volatile uint32_t ulHighFrequencyTimerTicks;
-// #endif
-// /* Run time and task stats gathering related definitions. */
-// #define configUSE_TRACE_FACILITY 1
-// #define configGENERATE_RUN_TIME_STATS 1
-// #define configUSE_STATS_FORMATTING_FUNCTIONS 1
-// #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() (ulHighFrequencyTimerTicks = 0ul)
-// #define portGET_RUN_TIME_COUNTER_VALUE() ulHighFrequencyTimerTicks
+/* Ensure stdint is only used by the compiler, and not the assembler. */
+#if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
+#include <stdint.h>
+extern volatile uint32_t ulHighFrequencyTimerTicks;
+#endif
+/* Run time and task stats gathering related definitions. */
+#define configUSE_TRACE_FACILITY 1
+#define configGENERATE_RUN_TIME_STATS 1
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() (ulHighFrequencyTimerTicks = 0ul)
+#define portGET_RUN_TIME_COUNTER_VALUE() ulHighFrequencyTimerTicks
 
 
 
