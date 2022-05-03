@@ -1,35 +1,39 @@
+/* Lib */
+#include "stdio.h "
+
 /* FreeRTOS */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 #include "croutine.h"
 
+
 /* hal */
 #include "hal_led.h"
+#include "hal_time.h"
 #include "hal_relay.h"
+#include "hal_Uart.h"
 
 
 
-volatile uint32_t ulHighFrequencyTimerTicks = 0UL;
 
 /*
 **********************************************************************************************************
 函数声明
 **********************************************************************************************************
 */
-
+static void vTaskTaskUserIF(void *pvParameters);
 static void vTaskMsgPro(void *pvParameters);
 static void vTaskStart(void *pvParameters);
-static void vTaskRelay(void *pvParameters);
 static void AppTaskCreate (void);
 /*
 **********************************************************************************************************
 变量声明
 **********************************************************************************************************
 */
+static TaskHandle_t xHandleTaskUserIF = NULL;
 static TaskHandle_t xHandleTaskMsgPro = NULL;
 static TaskHandle_t xHandleTaskStart = NULL;
-static TaskHandle_t xHandleTaskRelay = NULL;
 /*
 *********************************************************************************************************
 * 函 数 名: main
@@ -49,11 +53,17 @@ int main(void)
     和 cpsie i 是等效的。
     */
     // __set_PRIMASK(1); 
-    // __disable_irq();
+
+    __disable_irq();
     /* 硬件初始化 */
     hal_ledConfig();
-    RELAY_Init();
+//    RELAY_Init();
+    hal_TimeInit();
+    hal_Uart_Init();
 
+    // printf("who are you ");
+    // printf("are you ");
+    // printf("you ");
 
     /* 创建任务 */
     AppTaskCreate();
@@ -64,8 +74,56 @@ int main(void)
     heap 空间不足造成创建失败，此要加大 FreeRTOSConfig.h 文件中定义的 heap 大小：
     #define configTOTAL_HEAP_SIZE ( ( size_t ) ( 17 * 1024 ) )
     */
+		
+
     while(1);
 }
+
+/*
+*********************************************************************************************************
+*   函 数 名 : vTaskTaskUserIF
+*	功能说明 : 接口消息处理
+*	形 参    : pvParameters 是在创建该任务时传递的形参
+*	返 回 值 : 
+*   优 先 级 : 1  (数值越小优先级越低，这个跟uCOS相反)
+*********************************************************************************************************
+*/
+static void vTaskTaskUserIF(void *pvParameters)
+{
+//	uint8_t ucKeyCode;
+	uint8_t pcWriteBuffer[500];
+
+    while(1)
+    {
+		// ucKeyCode = bsp_GetKey();
+		
+		// if (ucKeyCode != KEY_NONE)
+		// {
+		// 	switch (ucKeyCode)
+			{
+				/* K1键 打印任务执行情况 */
+				// case KEY_DOWN_K1:			 
+					printf("=================================================\r\n");
+					printf("TaskName      State   Priority  Remain  TaskID\r\n");
+					vTaskList((char *)&pcWriteBuffer);
+					printf("%s\r\n", pcWriteBuffer);
+				
+					printf("\r\nTaskName        Count          Ration\r\n");
+					vTaskGetRunTimeStats((char *)&pcWriteBuffer);
+					printf("%s\r\n", pcWriteBuffer);
+				// 	break;
+				
+				// /* 其他的键值不处理 */
+				// default:                     
+				// 	break;
+			}
+		// }
+		
+		vTaskDelay(2000);
+	}
+}
+
+
 /*
 *********************************************************************************************************
 * 函 数 名: vTaskMsgPro
@@ -107,26 +165,6 @@ static void vTaskStart(void *pvParameters)
 
 /*
 *********************************************************************************************************
-* 函 数 名: vTaskStart
-* 功能说明: 启动任务，也就是最高优先级任务，这里用作 LED 闪烁
-* 形 参: pvParameters 是在创建该任务时传递的形参
-* 返 回 值: 无
-* 优 先 级: 4 
-*********************************************************************************************************
-*/
-
-static void vTaskRelay(void *pvParameters)
-{
-    while(1)
-    {
-        RELAY_1(1);
-        vTaskDelay(2000);
-        RELAY_1(0);
-        vTaskDelay(2000);
-    } 
- }
-/*
-*********************************************************************************************************
 * 函 数 名: AppTaskCreate
 * 功能说明: 创建应用任务
 * 形 参: 无 * 返 回 值: 无
@@ -134,26 +172,29 @@ static void vTaskRelay(void *pvParameters)
 */
 static void AppTaskCreate (void)
 {
-    xTaskCreate( vTaskMsgPro, /* 任务函数 */
+	BaseType_t x = 0;
+    x = xTaskCreate( vTaskMsgPro, /* 任务函数 */
                 "vTaskMsgPro", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
-                3, /* 任务优先级*/
+                6, /* 任务优先级*/
                 &xHandleTaskMsgPro ); /* 任务句柄 */
-    xTaskCreate( vTaskStart, /* 任务函数 */
+    x = xTaskCreate( vTaskStart, /* 任务函数 */
                 "vTaskStart", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
-                4, /* 任务优先级*/
+                5, /* 任务优先级*/
                 &xHandleTaskStart ); /* 任务句柄 */
-    xTaskCreate( vTaskRelay, /* 任务函数 */
-                "vTaskRelay", /* 任务名 */
+    x = xTaskCreate( vTaskTaskUserIF, /* 任务函数 */
+                "vTaskTaskUserIF", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
-                5, /* 任务优先级*/
-                &xHandleTaskRelay ); /* 任务句柄 */
+                3, /* 任务优先级*/
+                &xHandleTaskUserIF ); /* 任务句柄 */
+								
+								
+								x = x;
 }
-/***************************** 安富莱电子 www.armfly.com (END OF FILE) *********************************/
 
 
 

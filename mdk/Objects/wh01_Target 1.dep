@@ -320,11 +320,12 @@ I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC3904)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC3904)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC3904)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
-F (..\user\main.c)(0x626E160E)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (..\user\main.c)(0x62711712)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -335,7 +336,9 @@ I (..\FreeRTOS\include\list.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\queue.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\croutine.h)(0x61C2EEAA)
 I (..\hal\hal_led.h)(0x62347F54)
+I (..\hal\hal_time.h)(0x61A777F3)
 I (..\hal\hal_relay.h)(0x625A7390)
+I (..\hal\hal_Uart.h)(0x61DD5FC8)
 F (..\hal\hal_led.c)(0x62347F41)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\hal_led.o --omf_browse .\objects\hal_led.crf --depend .\objects\hal_led.d)
 I (C:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h)(0x61AD795E)
 I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC3900)
@@ -362,11 +365,52 @@ I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4CBC3904)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC3904)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC3904)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC3904)
+F (..\hal\hal_time.c)(0x626F1A3E)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\hal_time.o --omf_browse .\objects\hal_time.crf --depend .\objects\hal_time.d)
+I (C:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h)(0x61AD795E)
+I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC3900)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (C:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h)(0x61AD795E)
+I (..\user\stm32f10x_conf.h)(0x606184FE)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC3904)
+I (..\hal\hal_led.h)(0x62347F54)
+I (..\hal\hal_time.h)(0x61A777F3)
+F (..\hal\hal_Uart.c)(0x626E6576)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\hal_uart.o --omf_browse .\objects\hal_uart.crf --depend .\objects\hal_uart.d)
+I (C:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h)(0x61AD795E)
+I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC3900)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (C:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h)(0x61AD795E)
+I (..\user\stm32f10x_conf.h)(0x606184FE)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC3904)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
+I (..\hal\hal_Uart.h)(0x61DD5FC8)
+F (..\hal\hal_key.c)(0x61CF0B25)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\hal_key.o --omf_browse .\objects\hal_key.crf --depend .\objects\hal_key.d)
+I (C:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32F10x.h)(0x61AD795E)
+I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC3900)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (C:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h)(0x61AD795E)
+I (..\user\stm32f10x_conf.h)(0x606184FE)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC3904)
+I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC3904)
+I (..\hal\hal_key.h)(0x6084DFE5)
 F (..\FreeRTOS\croutine.c)(0x61C2EEAA)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\croutine.o --omf_browse .\objects\croutine.crf --depend .\objects\croutine.d)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -380,7 +424,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -395,7 +439,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -408,7 +452,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -422,7 +466,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -431,13 +475,13 @@ I (..\FreeRTOS\include\mpu_wrappers.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\task.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\list.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\stream_buffer.h)(0x61C2EEAA)
-F (..\FreeRTOS\tasks.c)(0x61C2EEAA)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\tasks.o --omf_browse .\objects\tasks.crf --depend .\objects\tasks.d)
+F (..\FreeRTOS\tasks.c)(0x626F2297)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS -I ..\Libraries\STM32F10x_StdPeriph_Driver\inc -I ..\user -I ..\Libraries\CMSIS\CM3\CoreSupport -I ..\hal -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM3-IC:\Users\10258\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\tasks.o --omf_browse .\objects\tasks.crf --depend .\objects\tasks.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -453,7 +497,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -467,7 +511,7 @@ F (..\FreeRTOS\portable\RVDS\ARM_CM3\port.c)(0x61C2EEAA)(-c --cpu Cortex-M3 -g -
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
@@ -480,7 +524,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (..\FreeRTOS\include\FreeRTOS.h)(0x62347BDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x6025237E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (..\user\FreeRTOSConfig.h)(0x626E1611)
+I (..\user\FreeRTOSConfig.h)(0x62711C28)
 I (..\FreeRTOS\include\projdefs.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\portable.h)(0x61C2EEAA)
 I (..\FreeRTOS\include\deprecated_definitions.h)(0x61C2EEAA)
