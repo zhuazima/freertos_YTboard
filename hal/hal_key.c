@@ -12,13 +12,8 @@ static void hal_keyConfig(void);
 
 static unsigned char hal_getKey1Sta(void);
 static unsigned char hal_getKey2Sta(void);
-static unsigned char hal_getKey3Sta(void);
-static unsigned char hal_getKey4Sta(void);
-static unsigned char hal_getKey5Sta(void);
-static unsigned char hal_getKey6Sta(void);
 	
-unsigned char (*getKeysState[KEYNUM])() = {  hal_getKey1Sta,hal_getKey2Sta,hal_getKey3Sta,hal_getKey4Sta,hal_getKey5Sta,hal_getKey6Sta
-								};
+unsigned char (*getKeysState[KEYNUM])() = {  hal_getKey1Sta , hal_getKey2Sta };
 								
   
 
@@ -143,8 +138,10 @@ static void hal_keyConfig(void)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
  
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |RCC_APB2Periph_AFIO, ENABLE);
-	
+	// RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |RCC_APB2Periph_AFIO, ENABLE);
+    // GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA , ENABLE);
     // GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
 	
 	GPIO_InitStructure.GPIO_Pin = K1_PIN;
@@ -158,26 +155,7 @@ static void hal_keyConfig(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 
 	GPIO_Init(K2_PORT, &GPIO_InitStructure);
 	
-	 
-	GPIO_InitStructure.GPIO_Pin = K3_PIN;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 
-	GPIO_Init(K3_PORT, &GPIO_InitStructure);
-	 
-	GPIO_InitStructure.GPIO_Pin = K4_PIN;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 
-	GPIO_Init(K4_PORT, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.GPIO_Pin = K5_PIN;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 
-	GPIO_Init(K5_PORT, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Pin = K6_PIN;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 
-	GPIO_Init(K6_PORT, &GPIO_InitStructure);
 }
 
  
@@ -190,25 +168,4 @@ static unsigned char hal_getKey1Sta(void)
 static unsigned char hal_getKey2Sta(void)
 {
 	return (!GPIO_ReadInputDataBit(K2_PORT, K2_PIN));		
-}
-
- 
-static unsigned char hal_getKey3Sta(void)
-{
-	return (!GPIO_ReadInputDataBit(K3_PORT, K3_PIN));		
-}
-
-static unsigned char hal_getKey4Sta(void)
-{
-	return (!GPIO_ReadInputDataBit(K4_PORT, K4_PIN));		
-}
-
-static unsigned char hal_getKey5Sta(void)
-{
-	return (!GPIO_ReadInputDataBit(K5_PORT, K5_PIN));		
-}
-
-static unsigned char hal_getKey6Sta(void)
-{
-	return (!GPIO_ReadInputDataBit(K6_PORT, K6_PIN));		
 }
