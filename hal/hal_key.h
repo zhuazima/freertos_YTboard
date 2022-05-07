@@ -2,13 +2,13 @@
 #define _HAL_KEY_H
 
 //上键
-#define K1_PORT	GPIOB
-#define K1_PIN	GPIO_Pin_3
+#define K1_PORT	GPIOA
+#define K1_PIN	GPIO_Pin_0
 
 
 //下键
-#define K2_PORT	GPIOB
-#define K2_PIN	GPIO_Pin_5
+#define K2_PORT	GPIOA
+#define K2_PIN	GPIO_Pin_1
 
 //左键
 #define K3_PORT	GPIOB

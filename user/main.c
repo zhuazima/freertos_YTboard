@@ -13,6 +13,7 @@
 #include "hal_time.h"
 #include "hal_relay.h"
 #include "hal_Uart.h"
+#include "hal_key.h"
 
 
 
@@ -25,7 +26,13 @@
 static void vTaskTaskUserIF(void *pvParameters);
 static void vTaskMsgPro(void *pvParameters);
 static void vTaskStart(void *pvParameters);
+static void vTaskKeyScan(void *pvParameters);
 static void AppTaskCreate (void);
+
+
+
+void KeyScan_handler(KEY_VALUE_TYPEDEF keys);
+
 /*
 **********************************************************************************************************
 变量声明
@@ -33,7 +40,10 @@ static void AppTaskCreate (void);
 */
 static TaskHandle_t xHandleTaskUserIF = NULL;
 static TaskHandle_t xHandleTaskMsgPro = NULL;
+static TaskHandle_t xHandleTaskKeyScan = NULL;
 static TaskHandle_t xHandleTaskStart = NULL;
+
+
 /*
 *********************************************************************************************************
 * 函 数 名: main
@@ -41,6 +51,23 @@ static TaskHandle_t xHandleTaskStart = NULL;
 * 形 参: 无 * 返 回 值: 无
 *********************************************************************************************************
 */
+
+
+void KeyScan_handler(KEY_VALUE_TYPEDEF keys)
+{   
+    KEY_VALUE_TYPEDEF KeyValue;
+    KeyValue = keys;
+
+    if(KeyValue == KEY1_CLICK_RELEASE)
+    {
+        printf("This is key1 release ....");
+    }
+
+}
+
+
+
+
 int main(void)
 {
     /* 
@@ -59,7 +86,11 @@ int main(void)
     hal_ledConfig();
 //    RELAY_Init();
     hal_TimeInit();
+    hal_KeyInit();
     hal_Uart_Init();
+
+
+    hal_KeyScanCBSRegister(KeyScan_handler);
 
     // printf("who are you ");
     // printf("are you ");
@@ -78,6 +109,10 @@ int main(void)
 
     while(1);
 }
+
+
+
+
 
 /*
 *********************************************************************************************************
@@ -122,7 +157,23 @@ static void vTaskTaskUserIF(void *pvParameters)
 		vTaskDelay(2000);
 	}
 }
-
+/*
+*********************************************************************************************************
+* 函 数 名: vTaskKeyScan
+* 功能说明: 按键扫描
+* 形 参: pvParameters 是在创建该任务时传递的形参
+* 返 回 值: 无
+* 优 先 级: 3
+*********************************************************************************************************
+*/
+static void vTaskKeyScan(void *pvParameters)
+{
+    while(1)
+    {
+        hal_KeyProc();
+        vTaskDelay(10);
+    } 
+ }
 
 /*
 *********************************************************************************************************
@@ -173,27 +224,35 @@ static void vTaskStart(void *pvParameters)
 static void AppTaskCreate (void)
 {
 	BaseType_t x = 0;
-    x = xTaskCreate( vTaskMsgPro, /* 任务函数 */
-                "vTaskMsgPro", /* 任务名 */
-                512, /* 任务栈大小，单位 word，也就是 4 字节 */
-                NULL, /* 任务参数 */
-                6, /* 任务优先级*/
-                &xHandleTaskMsgPro ); /* 任务句柄 */
     x = xTaskCreate( vTaskStart, /* 任务函数 */
                 "vTaskStart", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
                 5, /* 任务优先级*/
                 &xHandleTaskStart ); /* 任务句柄 */
+
+    x = xTaskCreate( vTaskMsgPro, /* 任务函数 */
+                "vTaskMsgPro", /* 任务名 */
+                512, /* 任务栈大小，单位 word，也就是 4 字节 */
+                NULL, /* 任务参数 */
+                6, /* 任务优先级*/
+                &xHandleTaskMsgPro ); /* 任务句柄 */
+
     x = xTaskCreate( vTaskTaskUserIF, /* 任务函数 */
                 "vTaskTaskUserIF", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
                 3, /* 任务优先级*/
                 &xHandleTaskUserIF ); /* 任务句柄 */
+
+    x = xTaskCreate( vTaskKeyScan, /* 任务函数 */
+                "vTaskKeyScan", /* 任务名 */
+                512, /* 任务栈大小，单位 word，也就是 4 字节 */
+                NULL, /* 任务参数 */
+                3, /* 任务优先级*/
+                &xHandleTaskKeyScan ); /* 任务句柄 */				
 								
-								
-								x = x;
+	x = x;
 }
 
 
