@@ -228,28 +228,28 @@ static void AppTaskCreate (void)
                 "vTaskStart", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
-                5, /* 任务优先级*/
+                2, /* 任务优先级*/
                 &xHandleTaskStart ); /* 任务句柄 */
 
     x = xTaskCreate( vTaskMsgPro, /* 任务函数 */
                 "vTaskMsgPro", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
-                6, /* 任务优先级*/
+                2, /* 任务优先级*/
                 &xHandleTaskMsgPro ); /* 任务句柄 */
 
     x = xTaskCreate( vTaskTaskUserIF, /* 任务函数 */
                 "vTaskTaskUserIF", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
-                3, /* 任务优先级*/
+                1, /* 任务优先级*/
                 &xHandleTaskUserIF ); /* 任务句柄 */
 
     x = xTaskCreate( vTaskKeyScan, /* 任务函数 */
                 "vTaskKeyScan", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
-                3, /* 任务优先级*/
+                10, /* 任务优先级*/
                 &xHandleTaskKeyScan ); /* 任务句柄 */				
 								
 	x = x;
