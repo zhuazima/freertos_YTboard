@@ -81,7 +81,7 @@ typedef void (*KeyEvent_CallBack_t)(KEY_VALUE_TYPEDEF keys);
 #define KEY_PRESS_CONTINUE_TIME	15	//150ms 
 
 void hal_KeyInit(void);
-void hal_KeyProc(void);
+unsigned char hal_KeyProc(void);
 void hal_KeyScanCBSRegister(KeyEvent_CallBack_t pCBS);
 
 

@@ -6,6 +6,8 @@
 #include "task.h"
 #include "queue.h"
 #include "croutine.h"
+#include "semphr.h"
+#include "event_groups.h"
 
 
 /* hal */
@@ -28,10 +30,8 @@ static void vTaskLED1(void *pvParameters);
 static void vTaskLED2(void *pvParameters);
 static void vTaskKeyScan(void *pvParameters);
 static void AppTaskCreate (void);
+static void AppObjCreate (void);
 
-
-
-void KeyScan_handler(KEY_VALUE_TYPEDEF keys);
 
 /*
 **********************************************************************************************************
@@ -45,29 +45,24 @@ static TaskHandle_t xHandleTaskLED2 = NULL;
 
 
 /*
+**********************************************************************************************************
+通信变量的声明
+**********************************************************************************************************
+*/
+#define BIT_0 (1 << 0)
+#define BIT_1 (1 << 1)
+#define BIT_ALL (BIT_0 | BIT_1)
+static EventGroupHandle_t xCreatedEventGroup = NULL;
+
+
+
+/*
 *********************************************************************************************************
 * 函 数 名: main
 * 功能说明: 标准 c 程序入口。
 * 形 参: 无 * 返 回 值: 无
 *********************************************************************************************************
 */
-
-
-void KeyScan_handler(KEY_VALUE_TYPEDEF keys)
-{   
-    KEY_VALUE_TYPEDEF KeyValue;
-    KeyValue = keys;
-
-    if(KeyValue == KEY1_CLICK_RELEASE)
-    {
-        printf("This is key1 release ....");
-    }
-
-}
-
-
-
-
 int main(void)
 {
     /* 
@@ -90,14 +85,16 @@ int main(void)
     hal_Uart_Init();
 
 
-    hal_KeyScanCBSRegister(KeyScan_handler);
-
     // printf("who are you ");
     // printf("are you ");
     // printf("you ");
 
     /* 创建任务 */
     AppTaskCreate();
+
+    /* 创建任务通信机制 */
+    AppObjCreate();
+
     /* 启动调度，开始执行任务 */
     vTaskStartScheduler();
     /* 
@@ -105,12 +102,74 @@ int main(void)
     heap 空间不足造成创建失败，此要加大 FreeRTOSConfig.h 文件中定义的 heap 大小：
     #define configTOTAL_HEAP_SIZE ( ( size_t ) ( 17 * 1024 ) )
     */
-		
+
 
     while(1);
 }
 
 
+
+
+/*
+*********************************************************************************************************
+* 函 数 名: AppObjCreate
+* 功能说明: 创建任务通信机制武汉安富莱电子有限公司
+WWW.ARMFLY.COM 安富莱 STM32-V6 开发板 FreeRTOS 教程
+2016年06月30日 版本： 1.0 第 453 页 共 1177 页
+* 形 参: 无
+* 返 回 值: 无
+*********************************************************************************************************
+*/
+static void AppObjCreate (void)
+{
+    /* 创建事件标志组 */
+    xCreatedEventGroup = xEventGroupCreate();
+    if(xCreatedEventGroup == NULL)
+    {
+     /* 没有创建成功，用户可以在这里加入创建失败的处理机制 */
+    }
+}
+
+/*
+*********************************************************************************************************
+* 函 数 名: AppTaskCreate
+* 功能说明: 创建应用任务
+* 形 参: 无 * 返 回 值: 无
+*********************************************************************************************************
+*/
+static void AppTaskCreate (void)
+{
+	BaseType_t x = 0;
+    x = xTaskCreate( vTaskLED2, /* 任务函数 */
+                "vTaskLED2", /* 任务名 */
+                512, /* 任务栈大小，单位 word，也就是 4 字节 */
+                NULL, /* 任务参数 */
+                2, /* 任务优先级*/
+                &xHandleTaskLED2 ); /* 任务句柄 */
+
+    x = xTaskCreate( vTaskLED1, /* 任务函数 */
+                "vTaskLED1", /* 任务名 */
+                512, /* 任务栈大小，单位 word，也就是 4 字节 */
+                NULL, /* 任务参数 */
+                2, /* 任务优先级*/
+                &xHandleTaskLED1 ); /* 任务句柄 */
+
+    x = xTaskCreate( vTaskTaskUserIF, /* 任务函数 */
+                "vTaskTaskUserIF", /* 任务名 */
+                512, /* 任务栈大小，单位 word，也就是 4 字节 */
+                NULL, /* 任务参数 */
+                1, /* 任务优先级*/
+                &xHandleTaskUserIF ); /* 任务句柄 */
+
+    x = xTaskCreate( vTaskKeyScan, /* 任务函数 */
+                "vTaskKeyScan", /* 任务名 */
+                512, /* 任务栈大小，单位 word，也就是 4 字节 */
+                NULL, /* 任务参数 */
+                9, /* 任务优先级*/
+                &xHandleTaskKeyScan ); /* 任务句柄 */				
+								
+	x = x;
+}
 
 
 
@@ -167,12 +226,33 @@ static void vTaskTaskUserIF(void *pvParameters)
 *********************************************************************************************************
 */
 static void vTaskKeyScan(void *pvParameters)
-{
+{ 
+    EventBits_t uxBits;
+    unsigned char KeyValue = 0;
+
+
     while(1)
     {
-        hal_KeyProc();
+        KeyValue = hal_KeyProc();
+        if(KeyValue== KEY1_CLICK_RELEASE)
+        {
+            /* 设置事件标志组的 bit0 */
+            uxBits = xEventGroupSetBits(xCreatedEventGroup, BIT_0);
+            if((uxBits & BIT_0) != 0)
+            {
+                printf("K1 pressed , bit 0 has been set .\r\n");
+            }
+            else
+            {
+                printf("K1 pressed  , bit 0 has been clearred .\r\n");
+            }
+
+            printf("key1 release ....\r\n ");
+        }
+
         vTaskDelay(10);
     } 
+
  }
 
 /*
@@ -186,6 +266,10 @@ static void vTaskKeyScan(void *pvParameters)
 */
 static void vTaskLED1(void *pvParameters)
 {
+    EventBits_t uxBits;
+    const TickType_t xTicksToWait = 100 / portTICK_PERIOD_MS; /* 最大延迟 100ms */
+
+
     while(1)
     {
         // /* 测试任务调度锁 */
@@ -198,10 +282,35 @@ static void vTaskLED1(void *pvParameters)
         // }
 
 
-        hal_Led1Drive(1);
-        vTaskDelay(1000);
-        hal_Led1Drive(0);
-        vTaskDelay(1000);
+
+        /* 等 K2 按键按下设置 bit0 和 K3 按键按下设置 bit1 */
+        uxBits = xEventGroupWaitBits(xCreatedEventGroup, /* 事件标志组句柄 */
+                                    BIT_0,  /* 等待 bit0 和 bit1 被设置 */
+                                    pdTRUE, /* 退出前 bit0 和 bit1 被清除，这里是 bit0 和 bit1都被设置才表示“退出” */
+                                    pdFALSE, /* 设置为 pdTRUE 表示等待 bit1 和 bit0 都被设置*/
+                                    xTicksToWait); /* 等待延迟时间 */
+        if((uxBits & BIT_0) == BIT_0)
+        {
+            /* 接收到 bit1 和 bit0 都被设置的消息 */
+            printf("Receive  bit 0 has been set ..\r\n");
+
+
+            /* 超时，另外注意仅接收到一个按键按下的消息时，变量 uxBits 的相应 bit 也是被设置的 */
+            hal_Led1Drive(1);
+            vTaskDelay(100);
+            hal_Led1Drive(0);
+            vTaskDelay(100);
+        }
+        // else
+        // {
+        //     hal_Led1Drive(1);
+        //     vTaskDelay(1000);
+        //     hal_Led1Drive(0);
+        //     vTaskDelay(1000);
+        // }
+
+
+
 
 
 
@@ -226,47 +335,6 @@ static void vTaskLED2(void *pvParameters)
         hal_Led2Drive(0);
         vTaskDelay(500);
     } 
- }
-
-/*
-*********************************************************************************************************
-* 函 数 名: AppTaskCreate
-* 功能说明: 创建应用任务
-* 形 参: 无 * 返 回 值: 无
-*********************************************************************************************************
-*/
-static void AppTaskCreate (void)
-{
-	BaseType_t x = 0;
-    x = xTaskCreate( vTaskLED2, /* 任务函数 */
-                "vTaskLED2", /* 任务名 */
-                512, /* 任务栈大小，单位 word，也就是 4 字节 */
-                NULL, /* 任务参数 */
-                2, /* 任务优先级*/
-                &xHandleTaskLED2 ); /* 任务句柄 */
-
-    x = xTaskCreate( vTaskLED1, /* 任务函数 */
-                "vTaskLED1", /* 任务名 */
-                512, /* 任务栈大小，单位 word，也就是 4 字节 */
-                NULL, /* 任务参数 */
-                2, /* 任务优先级*/
-                &xHandleTaskLED1 ); /* 任务句柄 */
-
-    x = xTaskCreate( vTaskTaskUserIF, /* 任务函数 */
-                "vTaskTaskUserIF", /* 任务名 */
-                512, /* 任务栈大小，单位 word，也就是 4 字节 */
-                NULL, /* 任务参数 */
-                1, /* 任务优先级*/
-                &xHandleTaskUserIF ); /* 任务句柄 */
-
-    x = xTaskCreate( vTaskKeyScan, /* 任务函数 */
-                "vTaskKeyScan", /* 任务名 */
-                512, /* 任务栈大小，单位 word，也就是 4 字节 */
-                NULL, /* 任务参数 */
-                10, /* 任务优先级*/
-                &xHandleTaskKeyScan ); /* 任务句柄 */				
-								
-	x = x;
 }
 
 

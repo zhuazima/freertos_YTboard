@@ -48,7 +48,7 @@ void hal_KeyScanCBSRegister(KeyEvent_CallBack_t pCBS)
 
 unsigned char  keys;
 
-void hal_KeyProc(void)
+unsigned char hal_KeyProc(void)
 {
 	unsigned char i,KeyState[KEYNUM];
 	
@@ -119,16 +119,17 @@ void hal_KeyProc(void)
 			break;
 			 		
 		}
-		if(keys)
-		{
-			if(KeyScanCBS)
-			{	 
-				KeyScanCBS((KEY_VALUE_TYPEDEF)keys);
-			}
-		}
-	 
+
+		// if(keys)
+		// {
+		// 	if(KeyScanCBS)
+		// 	{	 
+		// 		KeyScanCBS((KEY_VALUE_TYPEDEF)keys);
+		// 	}
+		// }
+        return keys;
+
 	}
-	
 
 }
 
