@@ -24,8 +24,8 @@
 **********************************************************************************************************
 */
 static void vTaskTaskUserIF(void *pvParameters);
-static void vTaskMsgPro(void *pvParameters);
-static void vTaskStart(void *pvParameters);
+static void vTaskLED1(void *pvParameters);
+static void vTaskLED2(void *pvParameters);
 static void vTaskKeyScan(void *pvParameters);
 static void AppTaskCreate (void);
 
@@ -39,9 +39,9 @@ void KeyScan_handler(KEY_VALUE_TYPEDEF keys);
 **********************************************************************************************************
 */
 static TaskHandle_t xHandleTaskUserIF = NULL;
-static TaskHandle_t xHandleTaskMsgPro = NULL;
+static TaskHandle_t xHandleTaskLED1 = NULL;
 static TaskHandle_t xHandleTaskKeyScan = NULL;
-static TaskHandle_t xHandleTaskStart = NULL;
+static TaskHandle_t xHandleTaskLED2 = NULL;
 
 
 /*
@@ -177,33 +177,47 @@ static void vTaskKeyScan(void *pvParameters)
 
 /*
 *********************************************************************************************************
-* 函 数 名: vTaskMsgPro
+* 函 数 名: vTaskLED1
 * 功能说明: 信息处理，这里是用作 LED 闪烁
 * 形 参: pvParameters 是在创建该任务时传递的形参
 * 返 回 值: 无
 * 优 先 级: 3 
 *********************************************************************************************************
 */
-static void vTaskMsgPro(void *pvParameters)
+static void vTaskLED1(void *pvParameters)
 {
     while(1)
     {
+        // /* 测试任务调度锁 */
+        // vTaskSuspendAll();
+        // printf("task LED1 is running ... \r\n ");
+        // xTaskResumeAll();
+        // if(!xTaskResumeAll()) /* 关闭调度锁，如果需要任务切换，此函数返回 pdTRUE，否则返回 pdFALSE */
+        // {
+        //     taskYIELD ();
+        // }
+
+
         hal_Led1Drive(1);
         vTaskDelay(1000);
         hal_Led1Drive(0);
         vTaskDelay(1000);
+
+
+
+
     } 
  }
 /*
 *********************************************************************************************************
-* 函 数 名: vTaskStart
+* 函 数 名: vTaskLED2
 * 功能说明: 启动任务，也就是最高优先级任务，这里用作 LED 闪烁
 * 形 参: pvParameters 是在创建该任务时传递的形参
 * 返 回 值: 无
 * 优 先 级: 4 
 *********************************************************************************************************
 */
-static void vTaskStart(void *pvParameters)
+static void vTaskLED2(void *pvParameters)
 {
     while(1)
     {
@@ -224,19 +238,19 @@ static void vTaskStart(void *pvParameters)
 static void AppTaskCreate (void)
 {
 	BaseType_t x = 0;
-    x = xTaskCreate( vTaskStart, /* 任务函数 */
-                "vTaskStart", /* 任务名 */
+    x = xTaskCreate( vTaskLED2, /* 任务函数 */
+                "vTaskLED2", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
                 2, /* 任务优先级*/
-                &xHandleTaskStart ); /* 任务句柄 */
+                &xHandleTaskLED2 ); /* 任务句柄 */
 
-    x = xTaskCreate( vTaskMsgPro, /* 任务函数 */
-                "vTaskMsgPro", /* 任务名 */
+    x = xTaskCreate( vTaskLED1, /* 任务函数 */
+                "vTaskLED1", /* 任务名 */
                 512, /* 任务栈大小，单位 word，也就是 4 字节 */
                 NULL, /* 任务参数 */
                 2, /* 任务优先级*/
-                &xHandleTaskMsgPro ); /* 任务句柄 */
+                &xHandleTaskLED1 ); /* 任务句柄 */
 
     x = xTaskCreate( vTaskTaskUserIF, /* 任务函数 */
                 "vTaskTaskUserIF", /* 任务名 */
