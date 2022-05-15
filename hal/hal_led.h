@@ -9,8 +9,12 @@
 
 
 
+
+void hal_ledConfig(void);
 void hal_Led1Drive(unsigned char sta);
 void hal_Led2Drive(unsigned char sta);
-void hal_ledConfig(void);
+void hal_Led1Turn(void);
+void hal_Led2Turn(void);
+
 
 #endif

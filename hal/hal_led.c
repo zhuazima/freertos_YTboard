@@ -48,3 +48,14 @@ void hal_Led2Drive(unsigned char sta)
 	}
 }
 
+
+void hal_Led1Turn(void)
+{
+	GPIO_WriteBit(LED1_PORT,LED1_PIN,(BitAction)(1-GPIO_ReadOutputDataBit(LED1_PORT,LED1_PIN)));
+}
+
+
+void hal_Led2Turn(void)
+{
+	GPIO_WriteBit(LED2_PORT,LED2_PIN,(BitAction)(1-GPIO_ReadOutputDataBit(LED2_PORT,LED2_PIN)));
+}
